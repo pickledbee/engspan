@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>English ♥ Español</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -94,99 +95,37 @@
 <body>
 
 <header>
-  <button class="icon-btn" id="backBtn" style="display:none">‹ Rooms</button>
   <h1 id="title">English <span class="heart">♥</span> Español</h1>
-  <button class="icon-btn" id="outBtn" style="display:none">Sign out</button>
+  <button class="icon-btn" id="outBtn" style="display:none">Sign out · Salir</button>
 </header>
 
-<!-- SIGN IN -->
-<section class="view" id="vAuth"><div class="scroll">
+<!-- ENTER THE ROOM -->
+<section class="view" id="vLogin"><div class="scroll">
   <div class="card">
-    <h2 id="authHead">Sign in · Iniciar sesión</h2>
-    <div class="muted">Private translated chat rooms. Chat privado con traducción.</div>
-    <button class="btn plain google" id="gBtn">
-      <svg width="24" height="24" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
-      Continue with Google · Continuar con Google
-    </button>
-    <div class="or">or with email · o con correo</div>
-    <form id="emailForm">
-      <div id="nameWrap" style="display:none">
-        <label for="fName">Your name · Tu nombre</label>
-        <input type="text" id="fName" autocomplete="name">
+    <h2>Private room · Sala privada</h2>
+    <div class="muted">Only people with the room password can come in. · Solo con la contraseña de la sala.</div>
+    <form id="loginForm">
+      <label for="fName">Your name · Tu nombre</label>
+      <input type="text" id="fName" autocomplete="given-name" maxlength="30" required>
+      <label>I speak · Hablo</label>
+      <div class="seg" id="langSeg">
+        <button type="button" data-l="en">English</button>
+        <button type="button" data-l="es">Español</button>
       </div>
-      <label for="fEmail">Email · Correo</label>
-      <input type="email" id="fEmail" autocomplete="email" required>
-      <label for="fPass">Password · Contraseña</label>
-      <input type="password" id="fPass" autocomplete="current-password" minlength="6" required>
-      <button class="btn" type="submit" id="emailBtn">Sign in · Entrar</button>
+      <label for="fPass">Room password · Contraseña de la sala</label>
+      <input type="password" id="fPass" autocomplete="current-password" required>
+      <button class="btn" type="submit" id="loginBtn">Enter · Entrar</button>
     </form>
-    <div class="err" id="authErr"></div>
-    <p class="muted" style="margin-top:12px">
-      <button class="link" id="toggleMode">New here? Create an account · ¿Nuevo? Crea una cuenta</button><br><br>
-      <button class="link" id="forgot">Forgot password? · ¿Olvidaste tu contraseña?</button>
-    </p>
+    <div class="err" id="loginErr"></div>
   </div>
 </div></section>
 
-<!-- GUEST JOIN (from an invite link, no account needed) -->
-<section class="view" id="vGuest"><div class="scroll">
-  <div class="card">
-    <h2>You're invited! · ¡Te invitaron!</h2>
-    <div class="muted">No account needed. Just type your name. · No necesitas cuenta. Solo escribe tu nombre.</div>
-    <label for="gName">Your name · Tu nombre</label>
-    <input type="text" id="gName" autocomplete="given-name" maxlength="30">
-    <label>I speak · Hablo</label>
-    <div class="seg" id="guestLang">
-      <button data-l="en">English</button>
-      <button data-l="es" class="on">Español</button>
-    </div>
-    <button class="btn" id="guestBtn">Join the chat · Entrar al chat</button>
-    <div class="err" id="guestErr"></div>
-    <p class="muted" style="margin-top:12px"><button class="link" id="guestToAuth">Have an account? Sign in · ¿Tienes cuenta? Entra</button></p>
-  </div>
-</div></section>
-
-<!-- ROOMS -->
-<section class="view" id="vLobby"><div class="scroll">
-  <div class="card">
-    <h2>Hi, <span id="meName"></span></h2>
-    <label>I speak · Hablo</label>
-    <div class="seg" id="langSeg">
-      <button data-l="en">English</button>
-      <button data-l="es">Español</button>
-    </div>
-  </div>
-  <div class="card">
-    <h2>Your rooms · Tus salas</h2>
-    <div id="roomList" class="muted">Loading… · Cargando…</div>
-  </div>
-  <div class="card">
-    <h2>New room · Nueva sala</h2>
-    <div class="row">
-      <input type="text" id="newRoomName" placeholder="Room name · Nombre" maxlength="40">
-      <button class="btn" id="createBtn">Create</button>
-    </div>
-    <div class="muted" style="margin-top:8px">Then tap Invite and send the link to the person you choose. · Luego toca Invitar y envía el enlace.</div>
-  </div>
-  <div class="card">
-    <h2>Join with a code · Unirse con código</h2>
-    <div class="row">
-      <input type="text" id="joinCode" placeholder="Code or link · Código o enlace">
-      <button class="btn" id="joinBtn">Join</button>
-    </div>
-    <div class="err" id="joinErr"></div>
-  </div>
-</div></section>
-
-<!-- ROOM -->
+<!-- CHAT -->
 <section class="view" id="vRoom">
   <div class="roombar">
-    <div class="members" id="members"></div>
-    <button class="icon-btn" id="inviteBtn">Invite · Invitar</button>
-    <button class="icon-btn" id="lockBtn" style="display:none"></button>
-    <button class="icon-btn" id="leaveBtn">Leave · Salir</button>
+    <div class="members" id="who"></div>
   </div>
-  <div id="chat"></div>
+  <div id="chat"><div class="center-msg">Loading… · Cargando…</div></div>
   <div class="composer">
     <div class="typing-lang">Typing in · Escribiendo en: <button class="link" id="typingLang"></button></div>
     <div class="box">
@@ -197,349 +136,182 @@
 </section>
 
 <section class="view" id="vSetup"><div class="scroll"><div class="center-msg">
-  Almost ready. The sign-in settings haven't been added yet.<br>Casi listo.
+  Almost ready. The room hasn't been connected yet.<br>Casi listo.
 </div></div></section>
 
 <div class="toast" id="toast"></div>
 
-<script src="firebase-config.js"></script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInAnonymously,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, addDoc, query, where, orderBy, limit,
-  onSnapshot, serverTimestamp, arrayUnion, arrayRemove, getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script>
+// Paste your Google Apps Script web app URL (ends in /exec) between the quotes:
+const API_URL = '';
 
-// OPTIONAL backup translator: paste a Google Apps Script web app URL (see Code.gs)
-const SCRIPT_URL = '';
-
+(function(){
 const $ = id => document.getElementById(id);
-const views = ['vAuth','vGuest','vLobby','vRoom','vSetup'];
+const views = ['vLogin','vRoom','vSetup'];
 function show(v){ views.forEach(x=>$(x).classList.toggle('on', x===v)); }
-function toast(t){ const el=$('toast'); el.textContent=t; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2200); }
-const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){ const el=$('toast'); el.textContent=t; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2400); }
 
-const cfg = window.FIREBASE_CONFIG;
-if (!cfg || !cfg.apiKey) { show('vSetup'); throw new Error('Firebase config missing'); }
+const store = {
+  get(k){ try{ return localStorage.getItem('engspan_'+k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem('engspan_'+k, v); }catch(e){} },
+  del(k){ try{ localStorage.removeItem('engspan_'+k); }catch(e){} }
+};
 
-const app = initializeApp(cfg);
-const auth = getAuth(app);
-const db = getFirestore(app);
+if (!API_URL) { show('vSetup'); return; }
 
-let me = null, myLang = 'en', unsubRooms = null, unsubRoom = null, unsubMsgs = null, current = null, typingLang = 'en';
+let token = store.get('token'), myName = store.get('name') || '', myLang = store.get('lang') || ((navigator.language||'').startsWith('es') ? 'es' : 'en');
+let typingLang = myLang;
+let msgs = new Map(), lastId = -1, rev = null, epoch = null, polling = false, timer = null;
 
-/* ---------- translation ---------- */
-async function googleCall(text, sl, tl){
-  const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl='+sl+'&tl='+tl+'&q='+encodeURIComponent(text);
-  const r = await fetch(url); if (!r.ok) throw new Error('http '+r.status);
+async function api(action, data){
+  const r = await fetch(API_URL, { method:'POST', body: JSON.stringify(Object.assign({ action, token }, data||{})) });
   const d = await r.json();
-  return (d[0]||[]).map(p=>p && p[0] || '').join('');
-}
-async function translate(text, from){
-  const to = from==='es' ? 'en' : 'es';
-  if (SCRIPT_URL) {
-    try { const r = await fetch(SCRIPT_URL+'?mode='+from+'&q='+encodeURIComponent(text)); const d = await r.json(); if (d.translation) return d.translation; } catch(e){}
-  }
-  return await googleCall(text, from, to);
+  if (!d.ok) { const e = new Error(d.error||'error'); e.code = d.error; throw e; }
+  return d;
 }
 
-/* ---------- auth ---------- */
-let creating = false, signingUp = false, starting = false;
-$('toggleMode').onclick = () => {
-  creating = !creating;
-  $('nameWrap').style.display = creating ? 'block' : 'none';
-  $('authHead').textContent = creating ? 'Create account · Crear cuenta' : 'Sign in · Iniciar sesión';
-  $('emailBtn').textContent = creating ? 'Create account · Crear cuenta' : 'Sign in · Entrar';
-  $('toggleMode').textContent = creating ? 'Have an account? Sign in · ¿Ya tienes cuenta? Entra' : 'New here? Create an account · ¿Nuevo? Crea una cuenta';
-  $('fPass').autocomplete = creating ? 'new-password' : 'current-password';
-  $('authErr').textContent = '';
-};
-function niceErr(e){
-  const c = (e && e.code) || '';
-  if (c.includes('invalid-credential') || c.includes('wrong-password') || c.includes('user-not-found')) return 'Wrong email or password. · Correo o contraseña incorrectos.';
-  if (c.includes('email-already-in-use')) return 'That email already has an account. Sign in instead. · Ese correo ya tiene cuenta.';
-  if (c.includes('weak-password')) return 'Password needs at least 6 characters. · Mínimo 6 caracteres.';
-  if (c.includes('invalid-email')) return 'Check the email address. · Revisa el correo.';
-  if (c.includes('popup-closed')) return '';
-  if (c.includes('too-many-requests')) return 'Too many tries. Wait a minute. · Demasiados intentos.';
-  return (e && e.message) || 'Something went wrong.';
-}
-$('emailForm').onsubmit = async ev => {
-  ev.preventDefault(); $('authErr').textContent = ''; $('emailBtn').disabled = true;
-  const email = $('fEmail').value.trim(), pass = $('fPass').value;
-  try {
-    if (creating) {
-      const name = $('fName').value.trim() || email.split('@')[0];
-      signingUp = true;
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user, { displayName: name });
-      await setDoc(doc(db,'users',cred.user.uid), { name, lang: myLang }, { merge:true });
-      signingUp = false;
-      startLobby(cred.user);
-    } else {
-      await signInWithEmailAndPassword(auth, email, pass);
-    }
-  } catch(e){ signingUp = false; $('authErr').textContent = niceErr(e); }
-  $('emailBtn').disabled = false;
-};
-$('gBtn').onclick = async () => {
-  $('authErr').textContent = '';
-  const p = new GoogleAuthProvider();
-  try { await signInWithPopup(auth, p); }
-  catch(e){
-    if ((e.code||'').includes('popup-blocked')) { try { await signInWithRedirect(auth, p); } catch(e2){ $('authErr').textContent = niceErr(e2); } }
-    else $('authErr').textContent = niceErr(e);
-  }
-};
-$('forgot').onclick = async () => {
-  const email = $('fEmail').value.trim();
-  if (!email) { $('authErr').textContent = 'Type your email above first. · Escribe tu correo arriba.'; return; }
-  try { await sendPasswordResetEmail(auth, email); $('authErr').innerHTML = '<span class="ok">Reset email sent. · Correo enviado.</span>'; }
-  catch(e){ $('authErr').textContent = niceErr(e); }
-};
-$('outBtn').onclick = () => { leaveRoomView(); signOut(auth); };
-
-/* ---------- guest join: name only, no account ---------- */
-let guestLang = 'es';
-document.querySelectorAll('#guestLang button').forEach(b => b.onclick = () => {
-  guestLang = b.dataset.l;
-  document.querySelectorAll('#guestLang button').forEach(x => x.classList.toggle('on', x === b));
-});
-$('guestToAuth').onclick = () => show('vAuth');
-$('guestBtn').onclick = async () => {
-  const name = $('gName').value.trim();
-  $('guestErr').textContent = '';
-  if (!name) { $('guestErr').textContent = 'Type your name first. · Escribe tu nombre primero.'; $('gName').focus(); return; }
-  $('guestBtn').disabled = true;
-  try {
-    signingUp = true;
-    const cred = await signInAnonymously(auth);
-    await updateProfile(cred.user, { displayName: name });
-    await setDoc(doc(db,'users',cred.user.uid), { name, lang: guestLang }, { merge:true });
-    signingUp = false;
-    startLobby(cred.user);
-  } catch(e){ signingUp = false; $('guestErr').textContent = niceErr(e); }
-  $('guestBtn').disabled = false;
-};
-
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    me = null; if (unsubRooms) unsubRooms(); leaveRoomView();
-    $('outBtn').style.display='none'; $('backBtn').style.display='none';
-    setTitle(null);
-    show(location.hash.startsWith('#join-') ? 'vGuest' : 'vAuth');
-    return;
-  }
-  if (signingUp) return; // the sign-up form finishes setting up the profile first
-  startLobby(user);
-});
-
-async function startLobby(user){
-  if (me && me.uid === user.uid && unsubRooms) { routeFromHash(); return; }
-  if (starting) return;
-  starting = true;
-  me = user;
-  const ref = doc(db,'users',user.uid);
-  let prof = {};
-  try { const s = await getDoc(ref); prof = s.exists() ? s.data() : {}; } catch(e){}
-  myLang = prof.lang || ((navigator.language||'').startsWith('es') ? 'es' : 'en');
-  const name = prof.name || user.displayName || (user.email||'').split('@')[0];
-  me.name = name;
-  setDoc(ref, { name, lang: myLang }, { merge:true }).catch(()=>{});
-  $('meName').textContent = name;
-  paintLang();
-  // Guests have no password, so signing out would lose their rooms: hide the button for them
-  $('outBtn').style.display = user.isAnonymous ? 'none' : '';
-  if (unsubRooms) unsubRooms();
-  unsubRooms = onSnapshot(query(collection(db,'rooms'), where('members','array-contains', user.uid)), snap => {
-    const rooms = snap.docs.map(d=>({id:d.id, ...d.data()}))
-      .sort((a,b)=>((b.lastAt&&b.lastAt.toMillis&&b.lastAt.toMillis())||0)-((a.lastAt&&a.lastAt.toMillis&&a.lastAt.toMillis())||0));
-    const list = $('roomList');
-    if (!rooms.length) { list.textContent = 'No rooms yet. Create one below. · Aún no hay salas.'; return; }
-    list.innerHTML = '';
-    rooms.forEach(r => {
-      const row = document.createElement('div'); row.className='room-row';
-      row.innerHTML = '<b>'+esc(r.name||'Room')+'</b><span class="muted">'+(r.locked?'🔒 ':'')+(r.members||[]).length+' 👤</span>';
-      row.onclick = () => openRoom(r.id);
-      list.appendChild(row);
-    });
-  }, err => { $('roomList').textContent = 'Could not load rooms. · No se pudieron cargar.'; });
-  starting = false;
-  routeFromHash();
-}
-
+/* ---------- login ---------- */
 function paintLang(){
   document.querySelectorAll('#langSeg button').forEach(b=>b.classList.toggle('on', b.dataset.l===myLang));
-  typingLang = myLang; paintTyping();
 }
-document.querySelectorAll('#langSeg button').forEach(b=> b.onclick = () => {
-  myLang = b.dataset.l; paintLang();
-  if (me) setDoc(doc(db,'users',me.uid), { lang: myLang }, { merge:true }).catch(()=>{});
-  if (current) renderMessages(lastMsgs);
-});
+document.querySelectorAll('#langSeg button').forEach(b => b.onclick = () => { myLang = b.dataset.l; paintLang(); });
+$('fName').value = myName;
+paintLang();
+
+const errText = {
+  wrong_password: 'Wrong password. · Contraseña incorrecta.',
+  too_many_tries: 'Too many wrong tries. Wait 15 minutes. · Demasiados intentos. Espera 15 minutos.',
+  password_not_set: 'The room password has not been set yet. · La contraseña aún no está configurada.',
+  name_required: 'Type your name. · Escribe tu nombre.'
+};
+$('loginForm').onsubmit = async ev => {
+  ev.preventDefault();
+  $('loginErr').textContent = ''; $('loginBtn').disabled = true;
+  try {
+    const d = await api('login', { name: $('fName').value.trim(), lang: myLang, password: $('fPass').value });
+    token = d.token; myName = d.name; myLang = d.lang;
+    store.set('token', token); store.set('name', myName); store.set('lang', myLang);
+    $('fPass').value = '';
+    enterRoom(d.room);
+  } catch(e){
+    $('loginErr').textContent = errText[e.code] || 'Could not connect. Try again. · No se pudo conectar.';
+  }
+  $('loginBtn').disabled = false;
+};
+
+$('outBtn').onclick = async () => {
+  try { await api('logout'); } catch(e){}
+  leave();
+};
+function leave(){
+  clearTimeout(timer); token = null; store.del('token');
+  msgs.clear(); lastId = -1; rev = null; epoch = null;
+  $('outBtn').style.display = 'none';
+  $('title').innerHTML = 'English <span class="heart">♥</span> Español';
+  show('vLogin');
+}
+
+/* ---------- room ---------- */
+function enterRoom(room){
+  if (room) $('title').textContent = room;
+  $('outBtn').style.display = '';
+  $('who').textContent = '👤 ' + myName + ' · ' + (myLang==='es' ? 'Español' : 'English');
+  typingLang = myLang; paintTyping();
+  msgs.clear(); lastId = -1; rev = null; epoch = null;
+  show('vRoom');
+  poll(true);
+}
 function paintTyping(){ $('typingLang').textContent = typingLang==='es' ? 'Español ⇄' : 'English ⇄'; }
 $('typingLang').onclick = () => { typingLang = typingLang==='es'?'en':'es'; paintTyping(); };
 
-function setTitle(t){
-  $('title').innerHTML = t ? esc(t) : 'English <span class="heart">♥</span> Español';
-}
-
-/* ---------- rooms ---------- */
-function newId(){
-  const a = new Uint8Array(12); crypto.getRandomValues(a);
-  return Array.from(a, x=>'abcdefghjkmnpqrstuvwxyz23456789'[x%31]).join('');
-}
-$('createBtn').onclick = async () => {
-  const name = $('newRoomName').value.trim() || ((me.name||'My')+"'s room");
-  const id = newId();
+async function poll(now){
+  clearTimeout(timer);
+  if (!token) return;
+  if (polling) { schedule(); return; }
+  polling = true;
   try {
-    await setDoc(doc(db,'rooms',id), { name, owner: me.uid, members:[me.uid], names:{[me.uid]: me.name}, locked:false, lastAt: serverTimestamp() });
-    $('newRoomName').value='';
-    openRoom(id);
-  } catch(e){ toast('Could not create room'); }
-};
-function codeFrom(s){
-  s = (s||'').trim(); const m = s.match(/join-([a-z0-9]+)/i); return (m ? m[1] : s).toLowerCase();
-}
-async function joinRoom(id){
-  $('joinErr').textContent = '';
-  if (!id) return;
-  try {
-    const ref = doc(db,'rooms',id);
-    const s = await getDoc(ref);
-    if (!s.exists()) { $('joinErr').textContent = 'No room with that code. · No existe esa sala.'; show('vLobby'); return; }
-    const r = s.data();
-    if (!(r.members||[]).includes(me.uid)) {
-      if (r.locked) { $('joinErr').textContent = 'That room is locked. Ask the owner to unlock it. · La sala está cerrada.'; show('vLobby'); return; }
-      await updateDoc(ref, { members: arrayUnion(me.uid), ['names.'+me.uid]: me.name });
+    const d = await api('poll', { since: lastId, rev, epoch });
+    if (!d.same) {
+      if (d.fresh) msgs.clear();
+      (d.msgs||[]).forEach(m => msgs.set(m.id, m));
+      (d.deleted||[]).forEach(id => msgs.delete(id));
+      lastId = d.lastId; rev = d.rev; epoch = d.epoch;
+      if (d.room) $('title').textContent = d.room;
+      render();
     }
-    openRoom(id);
-  } catch(e){ $('joinErr').textContent = 'Could not join. · No se pudo unir.'; show('vLobby'); }
+  } catch(e){
+    if (e.code === 'no_session') { toast('Please sign in again · Entra de nuevo'); leave(); polling = false; return; }
+  }
+  polling = false;
+  schedule();
 }
-$('joinBtn').onclick = () => joinRoom(codeFrom($('joinCode').value));
+function schedule(){ timer = setTimeout(()=>poll(), document.hidden ? 15000 : 3000); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && token) poll(true); });
 
-function routeFromHash(){
-  const h = location.hash.replace('#','');
-  if (h.startsWith('join-')) { history.replaceState(null,'',location.pathname); joinRoom(codeFrom(h)); return; }
-  if (!current) { setTitle(null); show('vLobby'); }
-}
-window.addEventListener('hashchange', () => { if (me) routeFromHash(); });
-
-let lastMsgs = [], roomData = null;
-function openRoom(id){
-  leaveRoomView();
-  current = id;
-  $('chat').innerHTML = '<div class="center-msg">Say hi! · ¡Saluda!</div>';
-  $('backBtn').style.display=''; $('outBtn').style.display='none';
-  show('vRoom');
-  unsubRoom = onSnapshot(doc(db,'rooms',id), s => {
-    if (!s.exists()) { toast('Room was deleted'); backToLobby(); return; }
-    roomData = s.data();
-    setTitle(roomData.name);
-    const names = roomData.names || {};
-    $('members').textContent = '👤 ' + (roomData.members||[]).map(u => u===me.uid ? 'You' : (names[u]||'Guest')).join(', ');
-    const owner = roomData.owner === me.uid;
-    $('lockBtn').style.display = owner ? '' : 'none';
-    $('lockBtn').textContent = roomData.locked ? '🔒 Locked' : '🔓 Open';
-    $('leaveBtn').textContent = owner ? 'Delete · Borrar' : 'Leave · Salir';
-  }, () => { toast('No access to that room'); backToLobby(); });
-  unsubMsgs = onSnapshot(query(collection(db,'rooms',id,'messages'), orderBy('at','asc'), limit(300)), snap => {
-    lastMsgs = snap.docs.map(d=>({id:d.id, ...d.data()}));
-    renderMessages(lastMsgs);
-  });
-  setTimeout(()=>$('input').focus(), 50);
-}
-function leaveRoomView(){
-  if (unsubRoom) unsubRoom(); if (unsubMsgs) unsubMsgs();
-  unsubRoom = unsubMsgs = null; current = null; roomData = null; lastMsgs = [];
-}
-function backToLobby(){
-  leaveRoomView(); setTitle(null);
-  $('backBtn').style.display='none'; $('outBtn').style.display = (me && me.isAnonymous) ? 'none' : '';
-  show('vLobby');
-}
-$('backBtn').onclick = backToLobby;
-
-$('inviteBtn').onclick = async () => {
-  const link = location.origin + location.pathname + '#join-' + current;
-  try { await navigator.clipboard.writeText(link); toast('Invite link copied · Enlace copiado'); }
-  catch(e){ window.prompt('Copy this link · Copia este enlace', link); }
-  if (navigator.share) { try { await navigator.share({ title: 'Join my room', text: 'Join me · Únete', url: link }); } catch(e){} }
-};
-$('lockBtn').onclick = async () => {
-  try { await updateDoc(doc(db,'rooms',current), { locked: !roomData.locked });
-    toast(roomData.locked ? 'Room open: anyone with the link can join' : 'Room locked: nobody new can join'); }
-  catch(e){ toast('Could not change lock'); }
-};
-$('leaveBtn').onclick = async () => {
-  const id = current, owner = roomData && roomData.owner === me.uid;
-  if (!confirm(owner ? 'Delete this room for everyone? · ¿Borrar la sala?' : 'Leave this room? · ¿Salir de la sala?')) return;
-  try {
-    backToLobby();
-    if (owner) {
-      const msgs = await getDocs(collection(db,'rooms',id,'messages'));
-      await Promise.all(msgs.docs.map(d=>deleteDoc(d.ref).catch(()=>{})));
-      await deleteDoc(doc(db,'rooms',id));
-    } else {
-      await updateDoc(doc(db,'rooms',id), { members: arrayRemove(me.uid) });
-    }
-  } catch(e){ toast('Something went wrong'); }
-};
-
-/* ---------- messages ---------- */
-function renderMessages(msgs){
+function render(){
   const chat = $('chat');
-  const nearBottom = chat.scrollHeight - chat.scrollTop - chat.clientHeight < 120;
+  const nearBottom = chat.scrollHeight - chat.scrollTop - chat.clientHeight < 140;
+  const list = [...msgs.values()].sort((a,b)=>a.id-b.id);
   chat.innerHTML = '';
-  if (!msgs.length) { chat.innerHTML = '<div class="center-msg">Say hi! · ¡Saluda!</div>'; return; }
-  msgs.forEach(m => {
-    const mine = m.uid === me.uid;
-    const showText = (m.from === myLang) ? m.text : (m.translation || m.text);
-    const other = (m.from === myLang) ? m.translation : m.text;
+  if (!list.length) { chat.innerHTML = '<div class="center-msg">Say hi! · ¡Saluda!</div>'; return; }
+  list.forEach(m => {
+    const mine = m.name === myName;
+    const showText = (m.from === myLang) ? m.text : (m.tr || m.text);
+    const other = (m.from === myLang) ? m.tr : m.text;
     const el = document.createElement('div');
     el.className = 'msg ' + (mine?'me ':'them ') + (m.from==='es'?'es':'en');
-    el.innerHTML = '<div class="who">'+esc(mine?'You':(m.name||'Guest'))+'</div><div class="main"></div>' + (other ? '<div class="orig"></div>' : '');
+    el.innerHTML = '<div class="who"></div><div class="main"></div>' + (other ? '<div class="orig"></div>' : '');
+    el.querySelector('.who').textContent = mine ? 'You · Tú' : m.name;
     el.querySelector('.main').textContent = showText;
     if (other) el.querySelector('.orig').textContent = other;
-    const tools = document.createElement('div'); tools.className='tools';
+    const tools = document.createElement('div'); tools.className = 'tools';
     if ('speechSynthesis' in window) {
-      const b = document.createElement('button'); b.textContent='🔊';
-      b.onclick = () => { try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(showText);
-        u.lang = (showText===m.text ? m.from : (m.from==='es'?'en':'es'))==='es' ? 'es-MX' : 'en-US'; u.rate=.95; speechSynthesis.speak(u);}catch(e){} };
+      const b = document.createElement('button'); b.textContent = '🔊';
+      const sayLang = (showText === m.text ? m.from : (m.from==='es'?'en':'es')) === 'es' ? 'es-MX' : 'en-US';
+      b.onclick = () => { try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(showText); u.lang = sayLang; u.rate = .95; speechSynthesis.speak(u); } catch(e){} };
       tools.appendChild(b);
     }
-    const c = document.createElement('button'); c.textContent='Copy';
-    c.onclick = () => navigator.clipboard.writeText(showText).then(()=>toast('Copied · Copiado')).catch(()=>{});
+    const c = document.createElement('button'); c.textContent = 'Copy';
+    c.onclick = () => { try { navigator.clipboard.writeText(showText).then(()=>toast('Copied · Copiado')); } catch(e){} };
     tools.appendChild(c);
-    if (mine) { const d = document.createElement('button'); d.textContent='Delete';
-      d.onclick = () => deleteDoc(doc(db,'rooms',current,'messages',m.id)).catch(()=>{}); tools.appendChild(d); }
+    if (mine) {
+      const d = document.createElement('button'); d.textContent = 'Delete';
+      d.onclick = async () => {
+        if (!confirm('Delete this message? · ¿Borrar este mensaje?')) return;
+        msgs.delete(m.id); render();
+        try { await api('delete', { id: m.id }); } catch(e){ toast('Could not delete'); }
+        poll(true);
+      };
+      tools.appendChild(d);
+    }
     el.appendChild(tools);
     chat.appendChild(el);
   });
-  if (nearBottom || msgs.length && msgs[msgs.length-1].uid===me.uid) chat.scrollTop = chat.scrollHeight;
+  if (nearBottom || list[list.length-1].name === myName) chat.scrollTop = chat.scrollHeight;
 }
 
 let sending = false;
 async function send(){
   const text = $('input').value.trim();
-  if (!text || sending || !current) return;
+  if (!text || sending) return;
   sending = true; $('send').disabled = true;
   try {
-    let translation = '';
-    try { translation = await translate(text, typingLang); } catch(e){ toast('Translation failed, sent original'); }
-    await addDoc(collection(db,'rooms',current,'messages'), {
-      uid: me.uid, name: me.name, from: typingLang, text, translation, at: serverTimestamp()
-    });
-    updateDoc(doc(db,'rooms',current), { lastAt: serverTimestamp() }).catch(()=>{});
-    $('input').value=''; $('input').style.height='auto';
-  } catch(e){ toast('Could not send · No se envió'); }
+    const d = await api('send', { text, from: typingLang });
+    $('input').value = ''; $('input').style.height = 'auto';
+    msgs.set(d.msg.id, d.msg); render();
+    poll(true);
+  } catch(e){
+    if (e.code === 'no_session') { leave(); }
+    else toast('Could not send · No se envió');
+  }
   sending = false; $('send').disabled = false; $('input').focus();
 }
 $('send').onclick = send;
 $('input').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); send(); } });
 $('input').addEventListener('input', () => { const t=$('input'); t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,160)+'px'; });
+
+if (token) enterRoom(null); else show('vLogin');
+})();
 </script>
 </body>
 </html>
