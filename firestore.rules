@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    match /users/{uid} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /rooms/{roomId} {
+      function me() { return request.auth.uid; }
+      function isMember() { return me() in resource.data.members; }
+      function isOwner() { return me() == resource.data.owner; }
+      function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
+      function sameOtherNames() {
+        return request.resource.data.names.diff(resource.data.names).affectedKeys().hasOnly([me()]);
+      }
+
+      // Anyone signed in who has the secret code can look it up (needed to join)
+      allow get: if signedIn();
+      // Your room list only shows rooms you are in
+      allow list: if signedIn() && me() in resource.data.members;
+
+      allow create: if signedIn()
+        && request.resource.data.owner == me()
+        && request.resource.data.members == [me()];
+
+      allow update: if signedIn() && (
+        // Owner can rename, lock/unlock, remove people
+        (isOwner() && request.resource.data.owner == resource.data.owner
+          && me() in request.resource.data.members)
+        // Joining an open room: add only yourself
+        || (!isMember() && resource.data.locked == false
+          && changed().hasOnly(['members', 'names'])
+          && request.resource.data.members.toSet() == resource.data.members.toSet().union([me()].toSet())
+          && request.resource.data.members.size() == resource.data.members.size() + 1
+          && sameOtherNames())
+        // Members: bump activity, update own name, or leave
+        || (isMember() && !isOwner()
+          && changed().hasOnly(['members', 'names', 'lastAt'])
+          && sameOtherNames()
+          && (request.resource.data.members == resource.data.members
+              || request.resource.data.members.toSet() == resource.data.members.toSet().difference([me()].toSet())))
+        // Owner bumping activity is covered above
+      );
+
+      allow delete: if signedIn() && isOwner();
+
+      match /messages/{msgId} {
+        function room() { return get(/databases/$(database)/documents/rooms/$(roomId)).data; }
+        allow read: if signedIn() && request.auth.uid in room().members;
+        allow create: if signedIn() && request.auth.uid in room().members
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() < 5000;
+        allow delete: if signedIn() && (resource.data.uid == request.auth.uid
+          || request.auth.uid == room().owner);
+      }
+    }
+  }
+}
